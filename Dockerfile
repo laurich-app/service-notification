@@ -10,4 +10,4 @@ COPY ./ /app/
 RUN ./mvnw clean package -DskipTests=true
 
 # Définir le point d'entrée de l'application
-CMD java -jar target/service-catalogue-0.0.1-SNAPSHOT.jar
+CMD java -jar target/service-notification-0.0.1-SNAPSHOT.jar
