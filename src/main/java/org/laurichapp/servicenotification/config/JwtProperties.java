@@ -1,4 +1,4 @@
-package org.laurichapp.servicenotification.configurations;
+package org.laurichapp.servicenotification.config;
 
 import jakarta.annotation.PostConstruct;
 import org.laurichapp.servicenotification.dtos.ConsulDTO;

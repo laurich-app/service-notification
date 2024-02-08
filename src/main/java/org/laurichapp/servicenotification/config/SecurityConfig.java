@@ -1,6 +1,5 @@
 package org.laurichapp.servicenotification.config;
 
-import org.laurichapp.servicenotification.configurations.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(autorize -> autorize
+                        .requestMatchers(HttpMethod.POST, "/notification").permitAll()
                         .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
                         .anyRequest().authenticated())
                 .csrf((csrf) -> csrf.disable())

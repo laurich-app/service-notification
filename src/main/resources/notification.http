@@ -12,10 +12,27 @@ Content-Type: application/json
         client.global.set("accessToken", response.headers.valueOf("Authorization").slice(7));
     }
 %}
-
 ####
 
-GET http://localhost:8080/notifies
+# Envoi d'un mail simple avec le contenu libre
+POST http://localhost:8080/notification/envoi-email
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
+{
+  "destinataire":"nadirsaiah97@gmail.com",
+  "objet": "Test envoi mail classique",
+  "contenu": "Blablabla, voici un mail classique... "
+}
+
+####
+
+# Envoi d'un mail utilisant le template bienvenue.ftl
+POST http://localhost:8080/notification/envoi-email-generique
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "destinataire":"nadirsaiah97@gmail.com",
+  "objet": "Test envoi mail générique bienvenue"
+}
