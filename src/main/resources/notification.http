@@ -1,8 +1,9 @@
-POST http://localhost:8081/auth/login
+POST http://localhost:8081/auth/connexion
 Content-Type: application/json
 
 {
-
+  "email": "root@root.com",
+  "motDePasse": "root"
 }
 > {%
     client.test("Request executed successfully", function() {
