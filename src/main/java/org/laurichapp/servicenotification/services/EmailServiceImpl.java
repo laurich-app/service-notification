@@ -37,20 +37,25 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void envoyerEmail(Email email, Optional<String> nomTemplate) {
+    public void envoyerEmail(Email email, Optional<String> nomTemplate, Optional<String> cheminPieceJointe) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
-            helper.addAttachment("LaurichApp-Logo.png", new ClassPathResource("/logo/Fond_Noir_V2.png").getFile());
+
+
+            cheminPieceJointe.ifPresent(chemin -> {
+                try {
+                    String nomFichierPieceJointe = new ClassPathResource(chemin).getFilename();
+                    helper.addAttachment(nomFichierPieceJointe, new ClassPathResource(chemin).getFile());
+                }catch (Exception e) {
+                    throw new RuntimeException("Erreur lors de l'ajout de la pièce jointe", e);
+                }
+            });
+
             if(nomTemplate.isPresent()){
                 Template template = configuration.getTemplate(nomTemplate.get() + ".ftl");
                 String emailHtml = FreeMarkerTemplateUtils.processTemplateIntoString(template, email);
                 helper.setText(emailHtml, true);
-                ClassPathResource imageResource = new ClassPathResource("/logo/Fond_Noir_V2.png");
-                byte[] imageBytes = Files.readAllBytes(imageResource.getFile().toPath());
-                String base64ImageEncodee = Base64.getEncoder().encodeToString(imageBytes);
-                String imageContent = "<img src=\"data:image/png;base64," + base64ImageEncodee + "\" alt=\"Logo de la Laurich'App\">";
-                helper.setText(emailHtml.replace("<!-- Placeholder pour l'image -->", imageContent), true);
             }else{
                 helper.setText(email.getContenu(), true);
             }

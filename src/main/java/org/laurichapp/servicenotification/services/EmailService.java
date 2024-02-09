@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface EmailService {
 
-    void envoyerEmail(Email email, Optional<String>  nomTemplate);
+    void envoyerEmail(Email email, Optional<String>  nomTemplate, Optional<String> cheminPieceJointe);
 }
