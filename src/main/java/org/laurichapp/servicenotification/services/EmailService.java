@@ -1,10 +1,10 @@
 package org.laurichapp.servicenotification.services;
 
-import org.laurichapp.servicenotification.models.Email;
+import org.laurichapp.servicenotification.dtos.EmailDTO;
 
 import java.util.Optional;
 
 public interface EmailService {
 
-    void envoyerEmail(Email email, Optional<String>  nomTemplate, Optional<String> cheminPieceJointe);
+    void envoyerEmail(EmailDTO emailDTO, Optional<String>  nomTemplate);
 }

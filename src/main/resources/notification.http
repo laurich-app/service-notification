@@ -15,8 +15,7 @@ Content-Type: application/json
 %}
 
 ####
-
-# Envoi d'un mail simple avec le contenu libre
+# Envoi d'un mail simple avec un contenu libre
 POST http://localhost:8080/notification/envoi-email
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
@@ -28,7 +27,6 @@ Authorization: Bearer {{accessToken}}
 }
 
 ####
-
 # Envoi d'un mail utilisant le template bienvenue.ftl
 POST http://localhost:8080/notification/envoi-email-generique
 Content-Type: application/json
@@ -40,13 +38,26 @@ Authorization: Bearer {{accessToken}}
 }
 
 ####
-
-# Envoi d'un mail utilisant le template bienvenue.ftl
-POST http://localhost:8080/notification/envoi-email-pieceJointe
+# Envoi d'un mail simple avec le contenu libre avec une piece jointe en plus
+POST http://localhost:8080/notification/envoi-email
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
   "destinataire":"nadirsaiah97@gmail.com",
-  "objet": "Test envoi mail générique bienvenue"
+  "objet": "Test envoi mail classique",
+  "contenu": "Blablabla, voici un mail classique... ",
+  "cheminPieceJointe": "/logo/Fond_Noir_V2.png"
+}
+
+####
+# Envoi d'un mail utilisant le template bienvenue.ftl avec une piece jointe en plus
+POST http://localhost:8080/notification/envoi-email-generique
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "destinataire":"nadirsaiah97@gmail.com",
+  "objet": "Test envoi mail générique bienvenue",
+  "cheminPieceJointe": "/logo/Fond_Noir_V2.png"
 }

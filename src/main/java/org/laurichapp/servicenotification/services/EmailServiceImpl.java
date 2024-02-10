@@ -3,8 +3,8 @@ package org.laurichapp.servicenotification.services;
 import freemarker.template.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.laurichapp.servicenotification.dtos.EmailDTO;
 import org.laurichapp.servicenotification.models.Email;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,43 +15,34 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Base64;
 import java.util.Optional;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-
-    @Autowired
-    private JavaMailSender javaMailSender;
-
-    @Autowired
-    private Configuration configuration;
+    private final JavaMailSender javaMailSender;
+    private final Configuration configuration;
 
     @Value("${spring.mail.username}")
     private String emetteur;
 
-    public EmailServiceImpl(JavaMailSender javaMailSender) {
+    public EmailServiceImpl(Configuration configuration, JavaMailSender javaMailSender) {
+        this.configuration = configuration;
         this.javaMailSender = javaMailSender;
     }
 
     @Override
-    public void envoyerEmail(Email email, Optional<String> nomTemplate, Optional<String> cheminPieceJointe) {
+    public void envoyerEmail(EmailDTO emailDTO, Optional<String> nomTemplate) {
         try {
+            Email email = Email.fromDTO(emailDTO);
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
-
-
-            cheminPieceJointe.ifPresent(chemin -> {
-                try {
-                    String nomFichierPieceJointe = new ClassPathResource(chemin).getFilename();
-                    helper.addAttachment(nomFichierPieceJointe, new ClassPathResource(chemin).getFile());
-                }catch (Exception e) {
-                    throw new RuntimeException("Erreur lors de l'ajout de la pièce jointe", e);
-                }
-            });
-
+            String cheminPieceJointe = email.getCheminPieceJointe();
+            if(cheminPieceJointe != null && (!cheminPieceJointe.isBlank())){
+                    String nomFichierPieceJointe =new ClassPathResource(cheminPieceJointe).getFilename();
+                    if (nomFichierPieceJointe != null) {
+                        helper.addAttachment(nomFichierPieceJointe, new ClassPathResource(cheminPieceJointe).getFile());
+                    }
+            }
             if(nomTemplate.isPresent()){
                 Template template = configuration.getTemplate(nomTemplate.get() + ".ftl");
                 String emailHtml = FreeMarkerTemplateUtils.processTemplateIntoString(template, email);
@@ -59,7 +50,6 @@ public class EmailServiceImpl implements EmailService {
             }else{
                 helper.setText(email.getContenu(), true);
             }
-
             helper.setFrom(emetteur);
             helper.setTo(email.getDestinataire());
             helper.setSubject(email.getObjet());
