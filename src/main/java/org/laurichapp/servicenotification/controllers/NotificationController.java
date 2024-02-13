@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/notification")
 public class NotificationController {
@@ -19,23 +17,25 @@ public class NotificationController {
         this.emailService = emailService;
     }
 
-    @PostMapping("/envoi-email")
-    public ResponseEntity<String> envoiEmail(@RequestBody @Valid EmailDTO emailDTO) {
+    @PostMapping("/email-bienvenu")
+    public ResponseEntity<String> envoiEmailBienvenu(@RequestBody @Valid EmailDTO emailDTO) {
         try{
-            this.emailService.envoyerEmail(emailDTO, Optional.empty());
+            this.emailService.envoyerEmailBienvenu(emailDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("E-mail classique a bien été envoyé à " + emailDTO.destinataire());
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'envoi : " + e.getMessage());
         }
     }
 
-    @PostMapping("/envoi-email-generique")
-    public ResponseEntity<String> envoiEmailGenerique(@RequestBody @Valid EmailDTO emailDTO) {
+    @PostMapping("/email-confirm-commande")
+    public ResponseEntity<String> envoiEmailConfirmationCommande(@RequestBody @Valid EmailDTO emailDTO) {
         try{
-            this.emailService.envoyerEmail(emailDTO, Optional.of("bienvenue"));
-            return ResponseEntity.status(HttpStatus.CREATED).body("E-mail générique a bien été envoyé à " + emailDTO.destinataire());
+            this.emailService.envoyerEmailConfirmCommandePJ(emailDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("E-mail classique a bien été envoyé à " + emailDTO.destinataire());
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'envoi : " + e.getMessage());
         }
     }
+
+
 }

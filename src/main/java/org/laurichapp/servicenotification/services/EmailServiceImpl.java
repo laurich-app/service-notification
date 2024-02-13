@@ -15,7 +15,6 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -31,31 +30,61 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void envoyerEmail(EmailDTO emailDTO, Optional<String> nomTemplate) {
+    public void envoyerEmailBienvenu(EmailDTO emailDTO) {
+        Email email = Email.fromDTO(emailDTO);
+        envoyerEmailAvecTemplate(email, "bienvenue.ftl", null);
+    }
+
+    @Override
+    public void envoyerEmailBienvenuPJ(EmailDTO emailDTO) {
+        Email email = Email.fromDTO(emailDTO);
+        envoyerEmailAvecTemplate(email,"bienvenue.ftl", email.getCheminPieceJointe());
+    }
+
+    @Override
+    public void envoyerEmailConfirmCommande(EmailDTO emailDTO) {
+        Email email = Email.fromDTO(emailDTO);
+        envoyerEmailAvecTemplate(email,"commande.ftl", null);
+    }
+
+    @Override
+    public void envoyerEmailConfirmCommandePJ(EmailDTO emailDTO) {
+        Email email = Email.fromDTO(emailDTO);
+        envoyerEmailAvecTemplate(email,"commande.ftl", email.getCheminPieceJointe());
+    }
+
+    private void envoyerEmailAvecTemplate(Email email, String templateName, String cheminPieceJointe) throws RuntimeException {
         try {
-            Email email = Email.fromDTO(emailDTO);
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
-            String cheminPieceJointe = email.getCheminPieceJointe();
-            if(cheminPieceJointe != null && (!cheminPieceJointe.isBlank())){
-                    String nomFichierPieceJointe =new ClassPathResource(cheminPieceJointe).getFilename();
-                    if (nomFichierPieceJointe != null) {
-                        helper.addAttachment(nomFichierPieceJointe, new ClassPathResource(cheminPieceJointe).getFile());
-                    }
-            }
-            if(nomTemplate.isPresent()){
-                Template template = configuration.getTemplate(nomTemplate.get() + ".ftl");
+            ajouterPieceJointe(helper, cheminPieceJointe);
+            if(templateName != null) {
+                Template template = configuration.getTemplate(templateName);
                 String emailHtml = FreeMarkerTemplateUtils.processTemplateIntoString(template, email);
                 helper.setText(emailHtml, true);
             }else{
-                helper.setText(email.getContenu(), true);
+                helper.setText(email.getContenu());
             }
             helper.setFrom(emetteur);
             helper.setTo(email.getDestinataire());
             helper.setSubject(email.getObjet());
             javaMailSender.send(message);
-        } catch (MessagingException | IOException | TemplateException e) {
+        } catch (MessagingException | TemplateException | IOException e) {
             throw new RuntimeException("Erreur lors de l'envoi de l'e-mail", e);
         }
     }
+
+    public void ajouterPieceJointe (MimeMessageHelper helper, String cheminPieceJointe) throws RuntimeException {
+        if (cheminPieceJointe != null && !cheminPieceJointe.isBlank()) {
+            String nomFichierPieceJointe = new ClassPathResource(cheminPieceJointe).getFilename();
+            if (nomFichierPieceJointe != null) {
+                try {
+                    helper.addAttachment(nomFichierPieceJointe, new ClassPathResource(cheminPieceJointe).getFile());
+                } catch (MessagingException | IOException e) {
+                    throw new RuntimeException("Erreur lors de l'ajout de la pièce jointe", e);
+                }
+            }
+        }
+    }
+
 }
