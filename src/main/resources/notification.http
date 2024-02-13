@@ -22,7 +22,7 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "destinataire":"nadirsaiah97@gmail.com",
+  "destinataire":"justin.lecas@gmail.com",
   "objet": "Test envoi mail bienvenue"
 }
 

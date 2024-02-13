@@ -8,6 +8,7 @@ import org.laurichapp.servicenotification.models.Email;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -24,7 +25,7 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}")
     private String emetteur;
 
-    public EmailServiceImpl(Configuration configuration, JavaMailSender javaMailSender) {
+    public EmailServiceImpl(Configuration configuration, JavaMailSenderImpl javaMailSender) {
         this.configuration = configuration;
         this.javaMailSender = javaMailSender;
     }
