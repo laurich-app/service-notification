@@ -3,17 +3,17 @@ services:
   discovery:
     image: consul:1.15
     ports:
-      - 8500:8500
+      - "8500:8500"
 
   serveur-conf:
     image: ghcr.io/laurich-app/serveur-conf:0.0.3
     ports:
-      - 8888:8888
+      - "8888:8888"
 
   postgres:
     image: postgres:12.17
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_DB=service-utilisateur
       - POSTGRES_USER=user
@@ -22,7 +22,7 @@ services:
   service-utilisateur:
     image: ghcr.io/laurich-app/service-utilisateur:1.1.0
     ports:
-      - 8081:8080
+      - "8081:8080"
     environment:
       - URL_CONFIG_SERVEUR=http://serveur-conf:8888
       - CONSUL_HOST=discovery
@@ -35,3 +35,14 @@ services:
     depends_on:
       - serveur-conf
       - discovery
+
+  rabbitmq:
+    image: rabbitmq:3.13.0-rc.5-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
