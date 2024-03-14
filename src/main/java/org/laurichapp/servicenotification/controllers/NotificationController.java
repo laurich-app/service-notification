@@ -1,6 +1,7 @@
 package org.laurichapp.servicenotification.controllers;
 
 import jakarta.validation.Valid;
+import org.laurichapp.servicenotification.dtos.CommandeDTO;
 import org.laurichapp.servicenotification.dtos.EmailDTO;
 import org.laurichapp.servicenotification.services.EmailService;
 import org.springframework.http.HttpStatus;
@@ -28,9 +29,9 @@ public class NotificationController {
     }
 
     @PostMapping("/email-confirm-commande")
-    public ResponseEntity<String> envoiEmailConfirmationCommande(@RequestBody @Valid EmailDTO emailDTO) {
+    public ResponseEntity<String> envoiEmailConfirmationCommande(@RequestBody @Valid EmailDTO emailDTO, @RequestBody @Valid CommandeDTO commandeDTO) {
         try{
-            this.emailService.envoyerEmailConfirmCommandePJ(emailDTO);
+            this.emailService.envoyerEmailConfirmCommandePJ(emailDTO, commandeDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("E-mail classique a bien été envoyé à " + emailDTO.destinataire());
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'envoi : " + e.getMessage());
