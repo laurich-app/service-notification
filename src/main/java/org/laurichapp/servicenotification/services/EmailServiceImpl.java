@@ -3,7 +3,9 @@ package org.laurichapp.servicenotification.services;
 import freemarker.template.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.laurichapp.servicenotification.dtos.CommandeDTO;
 import org.laurichapp.servicenotification.dtos.EmailDTO;
+import org.laurichapp.servicenotification.models.Commande;
 import org.laurichapp.servicenotification.models.Email;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -15,6 +17,8 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -32,35 +36,43 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void envoyerEmailBienvenu(EmailDTO emailDTO) {
         Email email = Email.fromDTO(emailDTO);
-        envoyerEmailAvecTemplate(email, "bienvenue.ftl", null);
+        envoyerEmailAvecTemplate(email, "bienvenue.ftl", null, null);
     }
 
     @Override
     public void envoyerEmailBienvenuPJ(EmailDTO emailDTO) {
         Email email = Email.fromDTO(emailDTO);
-        envoyerEmailAvecTemplate(email,"bienvenue.ftl", email.getCheminPieceJointe());
+        envoyerEmailAvecTemplate(email,"bienvenue.ftl", email.getCheminPieceJointe(), null);
     }
 
     @Override
-    public void envoyerEmailConfirmCommande(EmailDTO emailDTO) {
+    public void envoyerEmailConfirmCommande(EmailDTO emailDTO, CommandeDTO commandeDTO) {
         Email email = Email.fromDTO(emailDTO);
-        envoyerEmailAvecTemplate(email,"commande.ftl", null);
+        Commande commande = Commande.fromDTO(commandeDTO);
+        envoyerEmailAvecTemplate(email,"commande.ftl", null, commande);
     }
 
     @Override
-    public void envoyerEmailConfirmCommandePJ(EmailDTO emailDTO) {
+    public void envoyerEmailConfirmCommandePJ(EmailDTO emailDTO, CommandeDTO commandeDTO) {
         Email email = Email.fromDTO(emailDTO);
-        envoyerEmailAvecTemplate(email,"commande.ftl", email.getCheminPieceJointe());
+        Commande commande = Commande.fromDTO(commandeDTO);
+        envoyerEmailAvecTemplate(email,"commande.ftl", email.getCheminPieceJointe(), commande);
     }
 
-    private void envoyerEmailAvecTemplate(Email email, String templateName, String cheminPieceJointe) throws RuntimeException {
+    private void envoyerEmailAvecTemplate(Email email, String templateName, String cheminPieceJointe, Commande commande) throws RuntimeException {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
             ajouterPieceJointe(helper, cheminPieceJointe);
             if(templateName != null) {
                 Template template = configuration.getTemplate(templateName);
-                String emailHtml = FreeMarkerTemplateUtils.processTemplateIntoString(template, email);
+                Map<String, Object> model = new HashMap<>();
+                model.put("email", email);
+                model.put("pseudo", email.getPseudoDestinataire());
+                if(commande != null){
+                    model.put("commande", commande);
+                }
+                String emailHtml = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
                 helper.setText(emailHtml, true);
             }else{
                 helper.setText(email.getContenu());

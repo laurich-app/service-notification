@@ -61,16 +61,16 @@
 
         <p>Voici les détails de votre commande :</p>
 
-<#--        <p><strong>N° de commande :</strong> ${commande.numero}</p>-->
-<#--        <p><strong>Date de commande :</strong> ${commande.date}</p>-->
-<#--        <p><strong>Montant total :</strong> ${commande.total} €</p>-->
+        <p><strong>N° de commande :</strong> ${commande.numero}</p>
+        <p><strong>Date de commande :</strong> ${commande.date_creation}</p>
+        <p><strong>Montant total :</strong> ${commande.total} €</p>
 
         <p><strong>Articles commandés :</strong></p>
-<#--        <ul>-->
-<#--            <#list commande.produits as produit>-->
-<#--                <li>${produit.nom} - Quantité: ${produit.quantite} - Prix unitaire: ${produit.prix} €</li>-->
-<#--            </#list>-->
-<#--        </ul>-->
+        <ul>
+            <#list commande.produits as produit>
+                <li>${produit.libelle} - Couleur: ${produit.couleur} - Taille: ${produit.taille} - Quantité: ${produit.quantite} - Prix unitaire: ${produit.prix_unitaire} €</li>
+            </#list>
+        </ul>
         <p>Merci encore et à bientôt.</p>
         <p>Cordialement,</p>
         <p>Votre équipe Laurich'App.</p>

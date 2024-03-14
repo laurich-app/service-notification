@@ -23,7 +23,8 @@ Authorization: Bearer {{accessToken}}
 
 {
   "destinataire":"nadirsaiah97@gmail.com",
-  "objet": "Test envoi mail bienvenue"
+  "objet": "Test envoi mail bienvenue",
+  "pseudoDestinataire": "Nadir"
 }
 
 ####
