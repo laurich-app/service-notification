@@ -61,16 +61,38 @@
 
         <p>Voici les détails de votre commande :</p>
 
-<#--        <p><strong>N° de commande :</strong> ${commande.numero}</p>-->
-<#--        <p><strong>Date de commande :</strong> ${commande.date}</p>-->
-<#--        <p><strong>Montant total :</strong> ${commande.total} €</p>-->
+        <#if commande.numero??>
+            <p><strong>N° de commande :</strong> ${commande.numero}</p>
+        </#if>
+        <#if commande.date_creation??>
+            <p><strong>Date de commande :</strong> ${commande.date_creation?datetime?string('dd-MM-yyyy')}</p>
+        </#if>
+        <#if commande.total??>
+            <p><strong>Montant total :</strong> ${commande.total} €</p>
+        </#if>
 
         <p><strong>Articles commandés :</strong></p>
-<#--        <ul>-->
-<#--            <#list commande.produits as produit>-->
-<#--                <li>${produit.nom} - Quantité: ${produit.quantite} - Prix unitaire: ${produit.prix} €</li>-->
-<#--            </#list>-->
-<#--        </ul>-->
+        <ul>
+            <#list commande.produits as produit>
+                <li>
+                    <#if produit.libelle??>
+                        ${produit.libelle} -
+                    </#if>
+                    <#if produit.couleur??>
+                        Couleur: ${produit.couleur} -
+                    </#if>
+                    <#if produit.taille??>
+                        Taille: ${produit.taille} -
+                    </#if>
+                    <#if produit.quantite??>
+                        Quantité: ${produit.quantite} -
+                    </#if>
+                    <#if produit.prix_unitaire??>
+                        Prix unitaire: ${produit.prix_unitaire} €
+                    </#if>
+                </li>
+            </#list>
+        </ul>
         <p>Merci encore et à bientôt.</p>
         <p>Cordialement,</p>
         <p>Votre équipe Laurich'App.</p>

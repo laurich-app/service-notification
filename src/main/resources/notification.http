@@ -1,3 +1,27 @@
+### Inscription
+
+POST http://localhost:8081/users
+Content-Type: application/json
+User-Agent: Intelij IDEA
+
+{
+  "pseudo": "Nadir",
+  "email": "nadirsaiah97@gmail.com",
+  "motDePasse": "MonMdp"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+    if(response.status === 201) {
+        client.global.set("accessToken", response.headers.valueOf("Authorization").slice(7));
+        client.global.set("user_location", response.headers.valueOf("Location"));
+    }
+%}
+
+### Connexion
+
 POST http://localhost:8081/auth/connexion
 Content-Type: application/json
 
@@ -13,28 +37,3 @@ Content-Type: application/json
         client.global.set("accessToken", response.headers.valueOf("Authorization").slice(7));
     }
 %}
-
-####
-
-# Envoi d'un mail de bienvenu utilisant le template bienvenue.ftl
-POST http://localhost:8080/notification/email-bienvenu
-Content-Type: application/json
-Authorization: Bearer {{accessToken}}
-
-{
-  "destinataire":"justin.lecas@gmail.com",
-  "objet": "Test envoi mail bienvenue"
-}
-
-####
-
-# Envoi d'un mail de confirmation de commande utilisant le template commande.ftl
-POST http://localhost:8080/notification/email-confirm-commande
-Content-Type: application/json
-Authorization: Bearer {{accessToken}}
-
-{
-  "destinataire":"nadirsaiah97@gmail.com",
-  "objet": "Test envoi mail de confirmation de commande",
-  "cheminPieceJointe": "/logo/Fond_Noir_V2.png"
-}
