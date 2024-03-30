@@ -51,7 +51,7 @@
     <p>Bonjour ${email.pseudoDestinataire} !</p>
     <p>Merci de vous être inscrit(e) sur Laurich'App, votre nouvelle destination pour la mode en ligne.</p>
     <p>Parcourez notre vaste sélection de vêtements et d'accessoires, découvrez les dernières tendances et profitez d'offres exclusives réservées à nos membres.</p>
-    <p>Pour commencer, <a href="accueil-du-site">cliquez ici</a> pour accéder à notre site.</p>
+    <p>Pour commencer, <a href="${client_url}">cliquez ici</a> pour accéder à notre site.</p>
     <p>Cordialement,</p>
     <p>Votre équipe Laurich'App.</p>
 </div>

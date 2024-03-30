@@ -12,8 +12,6 @@ services:
 
   postgres:
     image: postgres:12.17
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_DB=service-utilisateur
       - POSTGRES_USER=user
@@ -32,6 +30,7 @@ services:
       - POSTGRES_URL=jdbc:postgresql://postgres:5432/service-utilisateur
       - POSTGRES_USER=user
       - POSTGRES_PSWD=pswd
+      - RABBIT_HOST=rabbitmq
     depends_on:
       - serveur-conf
       - discovery

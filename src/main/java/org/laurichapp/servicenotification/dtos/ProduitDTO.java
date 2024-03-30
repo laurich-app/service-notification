@@ -1,4 +1,6 @@
 package org.laurichapp.servicenotification.dtos;
 
-public record ProduitDTO(String couleur, String libelle, double prix_unitaire, String taille) {
+import java.io.Serializable;
+
+public record ProduitDTO(double prix_unitaire, String sexe, String taille, String libelle, String description, CouleurDTO couleur, int quantite, CategorieDTO categorie) implements Serializable {
 }

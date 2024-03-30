@@ -60,9 +60,8 @@ public class Email {
 
     public static Email fromDTO(EmailDTO emailDTO) {
         Email email = new Email();
-        email.setDestinataire(emailDTO.destinataire());
-        email.setCheminPieceJointe(emailDTO.cheminPieceJointe());
-        email.setPseudoDestinataire(emailDTO.pseudoDestinataire());
+        email.setDestinataire(emailDTO.email());
+        email.setPseudoDestinataire(emailDTO.pseudo());
         return email;
     }
 

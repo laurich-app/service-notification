@@ -28,6 +28,9 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}")
     private String emetteur;
 
+    @Value("${client.url}")
+    private String clientUrl;
+
     public EmailServiceImpl(Configuration configuration, JavaMailSender javaMailSender) {
         this.configuration = configuration;
         this.javaMailSender = javaMailSender;
@@ -72,6 +75,7 @@ public class EmailServiceImpl implements EmailService {
             Map<String, Object> model = new HashMap<>();
             model.put("email", email);
             model.put("pseudo", email.getPseudoDestinataire());
+            model.put("client_url", clientUrl);
             if(commande != null){
                 model.put("commande", commande);
             }

@@ -12,13 +12,15 @@ import org.laurichapp.servicenotification.dtos.ProduitDTO;
 @ToString
 public class Produit {
 
-    private  String couleur;
+    private String couleur;
+    private int quantite;
     private String libelle;
     private double prix_unitaire;
     private String taille;
 
     public static Produit fromDTO(ProduitDTO produitDTO){
-        return new Produit(produitDTO.couleur(),
+        return new Produit(produitDTO.couleur().libelle(),
+                produitDTO.quantite(),
                 produitDTO.libelle(),
                 produitDTO.prix_unitaire(),
                 produitDTO.taille());
