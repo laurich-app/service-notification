@@ -1,3 +1,27 @@
+### Inscription
+
+POST http://localhost:8081/users
+Content-Type: application/json
+User-Agent: Intelij IDEA
+
+{
+  "pseudo": "Nadir",
+  "email": "nadirsaiah97@gmail.com",
+  "motDePasse": "MonMdp"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+    if(response.status === 201) {
+        client.global.set("accessToken", response.headers.valueOf("Authorization").slice(7));
+        client.global.set("user_location", response.headers.valueOf("Location"));
+    }
+%}
+
+### Connexion
+
 POST http://localhost:8081/auth/connexion
 Content-Type: application/json
 

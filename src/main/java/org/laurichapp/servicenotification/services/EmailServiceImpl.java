@@ -36,12 +36,14 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void envoyerEmailBienvenu(EmailDTO emailDTO) {
         Email email = Email.fromDTO(emailDTO);
+        email.setObjet("Bienvenue chez Laurich'App");
         envoyerEmailAvecTemplate(email, "bienvenue.ftl", null, null);
     }
 
     @Override
     public void envoyerEmailBienvenuPJ(EmailDTO emailDTO) {
         Email email = Email.fromDTO(emailDTO);
+        email.setObjet("Bienvenue chez Laurich'App");
         envoyerEmailAvecTemplate(email,"bienvenue.ftl", email.getCheminPieceJointe(), null);
     }
 
@@ -49,6 +51,7 @@ public class EmailServiceImpl implements EmailService {
     public void envoyerEmailConfirmCommande(EmailDTO emailDTO, CommandeDTO commandeDTO) {
         Email email = Email.fromDTO(emailDTO);
         Commande commande = Commande.fromDTO(commandeDTO);
+        email.setObjet("Confirmation de commande");
         envoyerEmailAvecTemplate(email,"commande.ftl", null, commande);
     }
 
@@ -56,6 +59,7 @@ public class EmailServiceImpl implements EmailService {
     public void envoyerEmailConfirmCommandePJ(EmailDTO emailDTO, CommandeDTO commandeDTO) {
         Email email = Email.fromDTO(emailDTO);
         Commande commande = Commande.fromDTO(commandeDTO);
+        email.setObjet("Confirmation de commande");
         envoyerEmailAvecTemplate(email,"commande.ftl", email.getCheminPieceJointe(), commande);
     }
 
@@ -64,19 +68,15 @@ public class EmailServiceImpl implements EmailService {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
             ajouterPieceJointe(helper, cheminPieceJointe);
-            if(templateName != null) {
-                Template template = configuration.getTemplate(templateName);
-                Map<String, Object> model = new HashMap<>();
-                model.put("email", email);
-                model.put("pseudo", email.getPseudoDestinataire());
-                if(commande != null){
-                    model.put("commande", commande);
-                }
-                String emailHtml = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-                helper.setText(emailHtml, true);
-            }else{
-                helper.setText(email.getContenu());
+            Template template = configuration.getTemplate(templateName);
+            Map<String, Object> model = new HashMap<>();
+            model.put("email", email);
+            model.put("pseudo", email.getPseudoDestinataire());
+            if(commande != null){
+                model.put("commande", commande);
             }
+            String emailHtml = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+            helper.setText(emailHtml, true);
             helper.setFrom(emetteur);
             helper.setTo(email.getDestinataire());
             helper.setSubject(email.getObjet());
