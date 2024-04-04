@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @ToString
 public class Commande {
 
-    private String _id;
-    private Date date_creation;
+    private String id;
+    private Date dateCreation;
     private Double total;
     private List<Produit> produits;
     private String numero;
@@ -26,7 +26,7 @@ public class Commande {
         return new Commande(commandeDTO._id(),
                 commandeDTO.date_creation(),
                 commandeDTO.total(),
-                commandeDTO.produits().stream().map(Produit::fromDTO).collect(Collectors.toList()),
+                commandeDTO.produits().stream().map(Produit::fromDTO).toList(),
                 commandeDTO.numero());
     }
 }

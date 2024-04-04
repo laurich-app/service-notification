@@ -15,7 +15,7 @@ public class Produit {
     private String couleur;
     private int quantite;
     private String libelle;
-    private double prix_unitaire;
+    private double prixUnitaire;
     private String taille;
 
     public static Produit fromDTO(ProduitDTO produitDTO){
