@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.laurichapp.servicenotification.dtos.CommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitMQ.CommandeDTO;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter

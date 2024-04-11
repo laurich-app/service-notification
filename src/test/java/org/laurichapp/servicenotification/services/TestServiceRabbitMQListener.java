@@ -1,9 +1,9 @@
 package org.laurichapp.servicenotification.services;
 
 import org.junit.jupiter.api.Test;
-import org.laurichapp.servicenotification.dtos.CommandeDTO;
-import org.laurichapp.servicenotification.dtos.EmailDTO;
-import org.laurichapp.servicenotification.dtos.GenererCommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitMQ.CommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitMQ.EmailDTO;
+import org.laurichapp.servicenotification.dtos.rabbitMQ.GenererCommandeDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

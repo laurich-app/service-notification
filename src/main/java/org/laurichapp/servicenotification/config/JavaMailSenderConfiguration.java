@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-public class BeanConfiguration {
+public class JavaMailSenderConfiguration {
     private JavaMailSenderImpl javaMailSender;
 
     @Value("${spring.mail.port}")

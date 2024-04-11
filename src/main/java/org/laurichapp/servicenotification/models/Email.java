@@ -1,6 +1,6 @@
 package org.laurichapp.servicenotification.models;
 
-import org.laurichapp.servicenotification.dtos.EmailDTO;
+import org.laurichapp.servicenotification.dtos.rabbitMQ.EmailDTO;
 
 public class Email {
     private String destinataire;

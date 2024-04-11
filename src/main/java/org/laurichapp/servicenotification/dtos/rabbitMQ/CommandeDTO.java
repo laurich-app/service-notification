@@ -1,4 +1,4 @@
-package org.laurichapp.servicenotification.dtos;
+package org.laurichapp.servicenotification.dtos.rabbitMQ;
 
 import java.io.Serializable;
 import java.util.Date;

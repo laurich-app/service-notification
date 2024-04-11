@@ -1,7 +1,7 @@
 package org.laurichapp.servicenotification.services;
 
-import org.laurichapp.servicenotification.dtos.CommandeDTO;
-import org.laurichapp.servicenotification.dtos.EmailDTO;
+import org.laurichapp.servicenotification.dtos.rabbitMQ.CommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitMQ.EmailDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
 
 public interface EmailService {
