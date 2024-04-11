@@ -49,7 +49,7 @@ public class NotificationController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('GESTIONNAIRE')")
-    public ResponseEntity<NotificationOutDTO> getCommande(@PathVariable String id) {
+    public ResponseEntity<NotificationOutDTO> getNotification(@PathVariable String id) {
         try {
             NotificationOutDTO notifications = facadeNotification.getNotificationById(id);
             return ResponseEntity.ok(notifications);
