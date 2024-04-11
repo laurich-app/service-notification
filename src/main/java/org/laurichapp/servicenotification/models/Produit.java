@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.ProduitDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.ProduitDTO;
 
 @Getter
 @Setter

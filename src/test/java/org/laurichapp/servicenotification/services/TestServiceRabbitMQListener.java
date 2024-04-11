@@ -1,13 +1,14 @@
 package org.laurichapp.servicenotification.services;
 
 import org.junit.jupiter.api.Test;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.CommandeDTO;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.EmailDTO;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.GenererCommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.CommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.EmailDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.GenererCommandeDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 
 import static org.mockito.Mockito.*;
 
@@ -16,6 +17,9 @@ class TestServiceRabbitMQListener {
     @MockBean
     private EmailService emailService;
     private final ServiceRabbitMQListener serviceRabbitMQListener;
+
+    @MockBean
+    private JwtDecoder jwtDecoder;
 
     public TestServiceRabbitMQListener(@Autowired ServiceRabbitMQListener serviceRabbitMQListener) {
         this.serviceRabbitMQListener = serviceRabbitMQListener;

@@ -1,7 +1,7 @@
 package org.laurichapp.servicenotification.services;
 
-import org.laurichapp.servicenotification.dtos.rabbitMQ.EmailDTO;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.GenererCommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.EmailDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.GenererCommandeDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;

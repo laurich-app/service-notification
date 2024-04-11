@@ -2,8 +2,8 @@ package org.laurichapp.servicenotification.services;
 
 import freemarker.template.*;
 import jakarta.mail.internet.MimeMessage;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.CommandeDTO;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.EmailDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.CommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.EmailDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
 import org.laurichapp.servicenotification.models.Commande;
 import org.laurichapp.servicenotification.models.Email;

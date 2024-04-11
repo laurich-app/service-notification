@@ -4,19 +4,24 @@ import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.CommandeDTO;
-import org.laurichapp.servicenotification.dtos.rabbitMQ.EmailDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.CommandeDTO;
+import org.laurichapp.servicenotification.dtos.rabbitmq.EmailDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
 abstract class TestEmailService {
     private EmailService emailService;
+
+    @MockBean
+    private JwtDecoder jwtDecoder;
 
     @SpyBean
     private JavaMailSenderImpl javaMailSender;
