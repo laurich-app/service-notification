@@ -5,6 +5,7 @@ import org.laurichapp.servicenotification.dtos.rabbitmq.CommandeDTO;
 import org.laurichapp.servicenotification.dtos.rabbitmq.EmailDTO;
 import org.laurichapp.servicenotification.dtos.rabbitmq.GenererCommandeDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
+import org.laurichapp.servicenotification.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +15,10 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class TestServiceRabbitMQListener {
+
+    @MockBean
+    private NotificationRepository notificationRepository;
+
     @MockBean
     private EmailService emailService;
     private final ServiceRabbitMQListener serviceRabbitMQListener;

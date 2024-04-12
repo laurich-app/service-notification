@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.laurichapp.servicenotification.dtos.rabbitmq.CommandeDTO;
 import org.laurichapp.servicenotification.dtos.rabbitmq.EmailDTO;
 import org.laurichapp.servicenotification.exceptions.EmailException;
+import org.laurichapp.servicenotification.repositories.NotificationRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -19,6 +20,9 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 abstract class TestEmailService {
     private EmailService emailService;
+
+    @MockBean
+    private NotificationRepository notificationRepository;
 
     @MockBean
     private JwtDecoder jwtDecoder;
