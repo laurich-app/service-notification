@@ -29,7 +29,7 @@ public class FacadeNotificationImpl implements FacadeNotification {
     }
 
     @Override
-    public void creerNotification(String emailClient, String pseudoClient, NotificationFonction notificationFonction){
+    public Notification creerNotification(String emailClient, String pseudoClient, NotificationFonction notificationFonction){
         Notification notification = new Notification();
         notification.setEmailClient(emailClient);
         notification.setPseudoClient(pseudoClient);
@@ -37,7 +37,13 @@ public class FacadeNotificationImpl implements FacadeNotification {
         notification.setEtat(NotificationEtat.EN_ATTENTE);
         notification.setType(NotificationType.MAIL);
         notification.setFonction(notificationFonction);
-        notificationRepository.insert(notification);
+        return notificationRepository.insert(notification);
+    }
+
+    @Override
+    public void majNotificationEtat(String idNotification, NotificationEtat nouvelleNotificationEtat) throws NotificationNotFoundException {
+        Notification notification = getNotificationById(idNotification);
+        notification.setEtat(nouvelleNotificationEtat);
     }
 
     @Override
@@ -52,10 +58,18 @@ public class FacadeNotificationImpl implements FacadeNotification {
     }
 
     @Override
-    public NotificationOutDTO getNotificationById(String idNotification) throws NotificationNotFoundException {
+    public NotificationOutDTO getNotificationDTOById(String idNotification) throws NotificationNotFoundException {
         Optional<Notification> c = notificationRepository.findById(idNotification);
         if(c.isEmpty())
             throw new NotificationNotFoundException();
         return Notification.toDto(c.get());
+    }
+
+    @Override
+    public Notification getNotificationById(String idNotification) throws NotificationNotFoundException {
+        Optional<Notification> c = notificationRepository.findById(idNotification);
+        if(c.isEmpty())
+            throw new NotificationNotFoundException();
+        return c.get();
     }
 }

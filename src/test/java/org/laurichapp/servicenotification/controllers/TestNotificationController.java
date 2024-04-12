@@ -189,7 +189,7 @@ class TestNotificationController extends TestConfigurationControlleurRest{
         // BEFORE
         // Définie l'admin en admin
         this.defineAdminUser();
-        doThrow(NotificationNotFoundException.class).when(facadeNotification).getNotificationById("123");
+        doThrow(NotificationNotFoundException.class).when(facadeNotification).getNotificationDTOById("123");
 
         // WHERE
         MockHttpServletResponse response = mvc.perform(
@@ -216,7 +216,7 @@ class TestNotificationController extends TestConfigurationControlleurRest{
         this.defineAdminUser();
 
         NotificationOutDTO n = new NotificationOutDTO("id", "email@root.com", "pseudo", LocalDateTime.now(), NotificationEtat.EN_ATTENTE, NotificationType.MAIL, NotificationFonction.NOTIFIER_ADMIN_COMMANDE);
-        doReturn(n).when(facadeNotification).getNotificationById("123");
+        doReturn(n).when(facadeNotification).getNotificationDTOById("123");
 
         // WHERE
         MockHttpServletResponse response = mvc.perform(

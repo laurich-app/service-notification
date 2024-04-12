@@ -3,8 +3,10 @@ package org.laurichapp.servicenotification.facades;
 import org.laurichapp.servicenotification.dtos.out.NotificationOutDTO;
 import org.laurichapp.servicenotification.dtos.pagination.Paginate;
 import org.laurichapp.servicenotification.dtos.pagination.PaginateRequestDTO;
+import org.laurichapp.servicenotification.enums.NotificationEtat;
 import org.laurichapp.servicenotification.enums.NotificationFonction;
 import org.laurichapp.servicenotification.exceptions.NotificationNotFoundException;
+import org.laurichapp.servicenotification.models.Notification;
 
 public interface FacadeNotification {
 
@@ -14,18 +16,36 @@ public interface FacadeNotification {
      * @param pseudoClient
      * @param notificationFonction
      */
-    void creerNotification(String emailClient, String pseudoClient, NotificationFonction notificationFonction);
+    Notification creerNotification(String emailClient, String pseudoClient, NotificationFonction notificationFonction);
 
-    /*========== GET ==========*/
+    /**
+     * Mise à jour de l'etat de la notification (EN_ATTENTE, SUCCES, ECHEC)
+     * @param idNotification
+     * @param nouvelleNotificationEtat
+     * @throws NotificationNotFoundException
+     */
+    void majNotificationEtat(String idNotification, NotificationEtat nouvelleNotificationEtat) throws NotificationNotFoundException;
+
     /**
      * Récupère la liste des notifications pagines.
+     * @param paginateRequestDTO
      * @return Liste de notification
      */
     Paginate<NotificationOutDTO> getAllNotifications(PaginateRequestDTO paginateRequestDTO);
 
     /**
-     * Récupère une Notification.
-     * @return une commande
+     * Récupère une NotificationDTO.
+     * @param idNotification
+     * @return
+     * @throws NotificationNotFoundException
      */
-    NotificationOutDTO getNotificationById(String idNotification) throws NotificationNotFoundException;
+    NotificationOutDTO getNotificationDTOById(String idNotification) throws NotificationNotFoundException;
+
+    /**
+     * Récupère une Notification.
+     * @param idNotification
+     * @return
+     * @throws NotificationNotFoundException
+     */
+    Notification getNotificationById(String idNotification) throws NotificationNotFoundException;
 }

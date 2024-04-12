@@ -51,7 +51,7 @@ public class NotificationController {
     @PreAuthorize("hasRole('GESTIONNAIRE')")
     public ResponseEntity<NotificationOutDTO> getNotification(@PathVariable String id) {
         try {
-            NotificationOutDTO notifications = facadeNotification.getNotificationById(id);
+            NotificationOutDTO notifications = facadeNotification.getNotificationDTOById(id);
             return ResponseEntity.ok(notifications);
         } catch (NotificationNotFoundException c) {
             return ResponseEntity.notFound().build();
