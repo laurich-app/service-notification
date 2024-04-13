@@ -44,6 +44,7 @@ public class FacadeNotificationImpl implements FacadeNotification {
     public void majNotificationEtat(String idNotification, NotificationEtat nouvelleNotificationEtat) throws NotificationNotFoundException {
         Notification notification = getNotificationById(idNotification);
         notification.setEtat(nouvelleNotificationEtat);
+        notificationRepository.save(notification);
     }
 
     @Override
